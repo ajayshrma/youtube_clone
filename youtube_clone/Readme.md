@@ -265,7 +265,7 @@ npm i mongoose-aggregate-paginate-v2
 npm i bcrypt 
 
 ```
-## jsonwebtoken
+## jsonwebtoken (JWT)
 
 
 ```JS
@@ -285,9 +285,14 @@ Pre middleware functions are executed one after another, when each middleware ca
 
 ## File Upload
 
-Two Ways 
-1:express-fileupload
-2:multer 
+Two middlewares that used for upload files</br> 
+WE use MULTER 
+
+1: [Express-fileupload](https://www.npmjs.com/package/express-fileupload) --> Simple express middleware for uploading files.
+
+2: [multer](https://www.npmjs.com/package/multer)
+-->> Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files.
+
 
 npm install multer
 
@@ -295,8 +300,35 @@ npm install multer
 
 ```
 Cloudinary is a cloud-based service that provides a comprehensive solution for managing, optimizing, and delivering images and other media assets on the web. Here are some reasons why developers and businesses use Cloudinary:
+
+
+Hitesh Sir Explain the stretdgy to upload the files to cloudinary : 
+
+step 1:  first hum user se file lenge or temperary server pr locally store krenge
+
+step:2 then multer ka use krke file ka  localpath hum cloudinary ko denge to upload the file
+
+After uploding file ko hum server se remove kr denge 
+
+in sb k liye hum node jsfile system use krenge 
 ```
 
 ###  node js file system (fs)
-read write del
+
+read write delete operation k methods milte h vo use krenge 
+uske liye phle ->>  import fs from "fs" likho 
+then we can use `fs.unlinkSync` or etc etc .. 
+
+## MulterMiddleware Example from documentation
+```
+
+app.post('/profile', upload.single('avatar'), function (req, res, next) {
+
+})
+
+ye jo profile k bad humne -->>
+ upload.single('avatar') likha h ye hi hai middleware 
+
+```
+
 
