@@ -1,78 +1,67 @@
-
-// import mongoose, {Schema} from "mongoose";
-import mongoose from "mongoose"
-import { Jwt } from "jsonwebtoken"
+import mongoose, {Schema} from "mongoose";
+import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 
-
-const userSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true,
-        trim: true, 
-        index: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        lowecase: true,
-        trim: true, 
-    },
-    fullName: {
-        type: String,
-        required: true,
-        trim: true, 
-        index: true
-    },
-    avatar: {
-        type: String, // cloudinary url
-        required: true,
-    },
-    coverImage: {
-        type: String, // cloudinary url
-    },
-    watchHistory: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Video"
+const userSchema = new Schema(
+    {
+        username: {
+            type: String,
+            required: true,
+            unique: true,
+            lowecase: true,
+            trim: true, 
+            index: true
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true,
+            lowecase: true,
+            trim: true, 
+        },
+        fullName: {
+            type: String,
+            required: true,
+            trim: true, 
+            index: true
+        },
+        avatar: {
+            type: String, // cloudinary url
+            required: true,
+        },
+        coverImage: {
+            type: String, // cloudinary url
+        },
+        watchHistory: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "Video"
+            }
+        ],
+        password: {
+            type: String,
+            required: [true, 'Password is required']
+        },
+        refreshToken: {
+            type: String
         }
-    ],
-    password: {
-        type: String,
-        required: [true, 'Password is required']
+
     },
-    refreshToken: {
-        type: String
-    }
-
-},
-{
+    {
         timestamps: true
-})
+    }
+)
 
+userSchema.pre("save", async function (next) {
+    if(!this.isModified("password")) return next();
 
-
-
-//below code m humne user k password ko encrpyt kr dia h now if user come back to profile & update any field of their profile so then this pre again execute to stop this we  write if else condition to run only when it is modified
-
-userSchema.pre("SAVE", async function(){
-     if (this.isModified("password")) {
-        this.password =  bcrypt.hash(this.password, 10)
-     }
+    this.password = await bcrypt.hash(this.password, 10)
     next()
 })
 
-
-//Mongodb provides some methods for direct use so we create & inject to Schema
-//below we check when user login so we compare the passwords
-
-userSchema.methods.isPasswordCorrect = async function (password) {
-  return await bcrypt.compare(password, this.password)
+userSchema.methods.isPasswordCorrect = async function(password){
+    return await bcrypt.compare(password, this.password)
 }
-
 
 userSchema.methods.generateAccessToken = function(){
     return jwt.sign(
@@ -88,7 +77,6 @@ userSchema.methods.generateAccessToken = function(){
         }
     )
 }
-
 userSchema.methods.generateRefreshToken = function(){
     return jwt.sign(
         {
@@ -102,4 +90,4 @@ userSchema.methods.generateRefreshToken = function(){
     )
 }
 
-export const User = mongoose.model("",userSchema)
+export const User = mongoose.model("User", userSchema)

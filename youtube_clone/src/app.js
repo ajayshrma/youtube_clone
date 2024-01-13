@@ -1,11 +1,8 @@
-import  express  from "express";
-import cookieParser from "cookie-parser";
+import express from "express"
 import cors from "cors"
+import cookieParser from "cookie-parser"
 
-const app = express();
-
-//web pr bahut jghh se data ayega so un sbko kese handle krna hai vo below config kr rhe h
-
+const app = express()
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -14,8 +11,8 @@ app.use(cors({
 
 app.use(express.json({limit: "16kb"}))
 app.use(express.urlencoded({extended: true, limit: "16kb"}))
-app.use(express.static("public"))   //server 
-app.use(cookieParser())    //client k browser ki cookies pr cred oprtaion perform krne k liye 
+app.use(express.static("public"))
+app.use(cookieParser())
 
 
 //routes import
