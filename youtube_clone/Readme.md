@@ -304,9 +304,9 @@ Cloudinary is a cloud-based service that provides a comprehensive solution for m
 
 Hitesh Sir Explain the stretdgy to upload the files to cloudinary : 
 
-step 1:  first hum user se file lenge or temperary server pr locally store krenge
+step 1:  multer ki mddd se first hum user se file lenge or temperary server pr locally store krenge
 
-step:2 then multer ka use krke file ka  localpath hum cloudinary ko denge to upload the file
+step:2  file ka  localpath hum cloudinary ko denge to upload the file
 
 After uploding file ko hum server se remove kr denge 
 
@@ -320,7 +320,6 @@ uske liye phle ->>  import fs from "fs" likho
 then we can use `fs.unlinkSync` or etc etc .. 
 
 ## MulterMiddleware Example from documentation
-```
 
 app.post('/profile', upload.single('avatar'), function (req, res, next) {
 
@@ -329,6 +328,52 @@ app.post('/profile', upload.single('avatar'), function (req, res, next) {
 ye jo profile k bad humne -->>
  upload.single('avatar') likha h ye hi hai middleware 
 
+
+we have created  a separate folder called  `Middlewares / where we create multer.middleware.js  file`
+
+there we allot the server file to save on 
+      cb(null, "./public/temp")
+
+
+
+## MONGO_DB STRUCTURE
+
+https://studio3t.com/wp-content/uploads/2022/04/hierachy.png
+
 ```
+MongoDb Database 
+|
+|--DB_NAME(videoTube)
+           |
+           |--COLLECTION_NAME(users)
+                             |
+                             |--DOCUMENT_NAME(unlimited docu)
+                                |
+                                |--key_value_pair
+                                   or Array 
+                                   or nested docunent     
+```
+
+
+
+## Subscription Schema
+
+```
+subcriber - string 
+chaneel - string 
+
+chaeel : Ajajy Spo
+           |----- Aj spot k kitne subscriber hai ??
+           |      | 
+           |      |----dekho ajay spot k channel ko dekho kis user k document m bind hai tumhe subscriber mil jayenge.   
+           |
+           |------ajay spot ne kis kis ko subscribe kia hua hai ??
+           |       |
+           |       |------ajay spot ko bolo ki vo apni user id ko check kre ki vo kis kis channel k sath document me bind hai    
+```
+
+
+
+
 
 
